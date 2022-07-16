@@ -25,6 +25,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -40,6 +48,7 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
     private static Uri imageUri;
     private ImageButton PersonalInfoButton; private ImageButton ShippingAddressButton; private ImageButton PaymentMethodButton; private ImageButton MyOrdersButton;
     private ImageButton LogOutButton; private ImageButton ChangePasswordButton; private ImageButton ChangeEmailAddressButton; private ImageButton DeleteAccountButton;
+    private FirebaseUser user; private DatabaseReference databaseReference;  private String userName; private String userID;
 
     //open any new activity with class as parameter
     public  <T> void openNewPage(Class<T> className){
@@ -85,7 +94,7 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
 
             }
         });
-        UserFullName =(TextView) findViewById(R.id.User_FullName);
+
 
         //click on profile picture to add photo
         ProfilePicture = (CircleImageView) findViewById(R.id.profile_image);
@@ -189,6 +198,7 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
         LogOutButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 openNewPage(LoginScreen.class);
                 finish();
             }
@@ -197,6 +207,7 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
         LogOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 openNewPage(LoginScreen.class);
                 finish();
             }
@@ -249,6 +260,35 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
                 openDialog(v);
             }
         });
+
+        /**
+         * get the name that the user used when signing up and use it to display as profile name
+         * */
+        UserFullName =(TextView) findViewById(R.id.User_FullName);
+        //get the id for the current user
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+        //make userfullName equal to user name from database
+        databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+                if(userProfile!=null){
+                    String fullName = userProfile.fullName;
+                    String email = userProfile.Email;
+                    UserFullName.setText(fullName);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(AccountSetting.this, "Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
     }
     //request permission to add profile picture
     @Override

@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginScreen extends AppCompatActivity {
     private Button Log_in; private Button Sign_Up; private ImageView logo;
@@ -104,8 +105,16 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    //redirect user to merchandise screen
-                    openNewPage(MerchandiseScreen.class);
+                    //check if email was verified
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if(user.isEmailVerified()){
+                        //redirect user to merchandise screen
+                        openNewPage(MerchandiseScreen.class);
+                    }else{
+                        user.sendEmailVerification();
+                        Toast.makeText(LoginScreen.this, "Check your Email to verify your account!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }else{
                     Toast.makeText(LoginScreen.this, "Failed to login! Please check credentials!", Toast.LENGTH_SHORT).show();
                 }
