@@ -3,6 +3,7 @@ package com.example.exclusive;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,13 +13,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginScreen extends AppCompatActivity {
     private Button Log_in; private Button Sign_Up; private ImageView logo;
     private EditText Password_Field; private EditText Email_Field; private TextView Forgot_Password;
+    private FirebaseAuth mAuth;
     //Method to open any page with class to go to as parameter
     private <T> void openNewPage(Class<T> className){
         Intent intent = new Intent(this, className);
@@ -27,7 +34,7 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void ScreenTapped(View view){
-        openNewPage(com.example.exclusive.MerchandiseScreen.class);
+        //openNewPage(com.example.exclusive.MerchandiseScreen.class);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,7 @@ public class LoginScreen extends AppCompatActivity {
                 }else if(TextUtils.isEmpty(Email_Field.getText().toString())) {
                     Toast.makeText(LoginScreen.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 }else{
-                    openNewPage(MerchandiseScreen.class);
+                    userLogin();
                 }
             }
         });
@@ -74,11 +81,35 @@ public class LoginScreen extends AppCompatActivity {
                 openNewPage(ResetPassword.class);
             }
         });
-    }
 
+        //initialize mAuth
+        mAuth = FirebaseAuth.getInstance();
+    }
 
     @Override
     public void onBackPressed() {
         openNewPage(CreateAccountScreen.class);
+    }
+
+    private void userLogin(){
+        String Email = Email_Field.getText().toString().trim();
+        String Password = Password_Field.getText().toString().trim();
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
+            Email_Field.setError("Please enter a valid email address");
+            Email_Field.requestFocus();
+        }
+
+        mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    //redirect user to merchandise screen
+                    openNewPage(MerchandiseScreen.class);
+                }else{
+                    Toast.makeText(LoginScreen.this, "Failed to login! Please check credentials!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

@@ -133,6 +133,7 @@ public class CreateAccountScreen extends AppCompatActivity {
                                 }
                             });
                 }else{
+                    //check if email is already in use
                     mAuth.fetchSignInMethodsForEmail(Email_Field.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                         @Override
                         public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
