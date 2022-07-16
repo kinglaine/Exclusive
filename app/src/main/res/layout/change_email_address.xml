@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    tools:context=".ChangeEmailAddress">
+    <EditText
+        android:id="@+id/Current_Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Current Password"
+        android:textColorHint="@color/grey"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/black"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toTopOf="parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/NewEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="New Email Address"
+        android:textColorHint="@color/grey"
+        android:backgroundTint="@color/black"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/Current_Password">
+    </EditText>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

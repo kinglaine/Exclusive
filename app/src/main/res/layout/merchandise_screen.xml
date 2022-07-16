@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MerchandiseScreen">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    <TextView
+        android:id="@+id/Brand_Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Exclusive"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center_horizontal">
+    </TextView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/Brand_Name">
+    </View>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+    </ScrollView>
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_add"
+            app:layout_constraintBottom_toTopOf="@id/Menu_Bar"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="80dp">
+        </Button>
+
+    <ImageView
+        android:id="@+id/Menu_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_menu_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+    </ImageView>
+
+    <Button
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/Menu_Bar"
+        app:layout_constraintBottom_toBottomOf="@id/Menu_Bar"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/ic_home_black"
+        android:layout_marginLeft="-250dp"
+        android:layout_marginTop="25dp">
+    </Button>
+
+    <Button
+        android:id="@+id/Access_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/Menu_Bar"
+        app:layout_constraintBottom_toBottomOf="@id/Menu_Bar"
+        android:layout_marginRight="-35dp"
+        android:background="@drawable/ic_cart">
+    </Button>
+
+    <Button
+        android:id="@+id/Account_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/Menu_Bar"
+        app:layout_constraintBottom_toBottomOf="@id/Menu_Bar"
+        android:background="@drawable/ic_account_info"
+        android:layout_marginRight="-250dp"
+        android:rotationY="150"
+        android:layout_marginTop="25dp">
+    </Button>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

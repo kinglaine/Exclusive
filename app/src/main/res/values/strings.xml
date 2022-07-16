@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Exclusive</string>
+    <string name="state">State</string>
+    <string name="first_name">First Name</string>
+    <string name="city">City</string>
+    <string name="last_name">Last Name</string>
+    <string name="address_line">Address Line</string>
+</resources>
