@@ -3,6 +3,7 @@ package com.example.exclusive;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -55,5 +56,16 @@ public class ResetPassword extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        openNewPage(LoginScreen.class);
+    }
+
+    public  <T> void openNewPage(Class<T> className){
+        Intent intent = new Intent(ResetPassword.this, className);
+        startActivity(intent);
+        overridePendingTransition(0, R.anim.lefttoright);
     }
 }

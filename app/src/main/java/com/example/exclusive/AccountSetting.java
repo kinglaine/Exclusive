@@ -262,7 +262,7 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
         });
 
         /**
-         * get the name that the user used when signing up and use it to display as profile name
+         * get the name that the user used when signing up from database and use it to display as profile name
          * */
         UserFullName =(TextView) findViewById(R.id.User_FullName);
         //get the id for the current user
