@@ -103,12 +103,12 @@ public class CreateAccountScreen extends AppCompatActivity {
 
         if(FullName.isEmpty()){
             User_FullName.setError("Please enter a name");
-            Password_Field.requestFocus();
+            User_FullName.requestFocus();
         }
         //check if user provided a valid email
         if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
             Email_Field.setError("Please enter a valid email address");
-            Password_Field.requestFocus();
+            Email_Field.requestFocus();
         }
         //check password length because firebase wont accept password with less than 6 charachters
         if(Password.length()<6){

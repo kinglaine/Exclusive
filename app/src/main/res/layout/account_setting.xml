@@ -19,7 +19,7 @@
             android:id="@+id/My_Profile"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="My Profile"
+            android:text="Settings"
             android:padding="10dp"
             android:textStyle="bold"
             android:textColor="@color/white"

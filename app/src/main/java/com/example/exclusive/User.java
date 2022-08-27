@@ -9,5 +9,10 @@ public class User {
         this.fullName = fullName;
         this.Email = Email;
     }
+    public User(String fullName){
+        this.fullName = fullName;
+    }
+
+
 
 }

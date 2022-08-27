@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class LoginScreen extends AppCompatActivity {
     private Button Log_in; private Button Sign_Up; private ImageView logo;
@@ -35,7 +36,7 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void ScreenTapped(View view){
-        //openNewPage(com.example.exclusive.MerchandiseScreen.class);
+        openNewPage(MerchandiseScreen.class);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class LoginScreen extends AppCompatActivity {
             Email_Field.setError("Please enter a valid email address");
             Email_Field.requestFocus();
         }
+       
 
         mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -115,10 +117,21 @@ public class LoginScreen extends AppCompatActivity {
                         Toast.makeText(LoginScreen.this, "Check your Email to verify your account!", Toast.LENGTH_SHORT).show();
                     }
 
-                }else{
+                }
+                else{
+                    mAuth.fetchSignInMethodsForEmail(Email_Field.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                            boolean check = task.getResult().getSignInMethods().isEmpty();
+                            if(check){
+                                Toast.makeText(LoginScreen.this, "Account do not exist!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     Toast.makeText(LoginScreen.this, "Failed to login! Please check credentials!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
 }

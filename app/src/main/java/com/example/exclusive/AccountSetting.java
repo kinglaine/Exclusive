@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -357,4 +359,6 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
     public void onBackPressed() {
         openNewPage(MerchandiseScreen.class);
     }
+
+
 }
