@@ -60,12 +60,12 @@ public class ChangeEmailAddress extends DialogFragment {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         currentUser.sendEmailVerification();
-                                        User user = new User(currentUser.getEmail());
+                                        User user = new User(currentUser.getDisplayName(), currentUser.getEmail());
                                         FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-
+                                                        Toast.makeText(getContext(), "Email change was a success! Check new Email to verify", Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                         //Toast.makeText(getContext(), "Email Change was a success, check new email for verification", Toast.LENGTH_SHORT).show();

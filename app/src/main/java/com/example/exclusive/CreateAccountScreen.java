@@ -20,7 +20,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateAccountScreen extends AppCompatActivity {
@@ -81,6 +83,9 @@ public class CreateAccountScreen extends AppCompatActivity {
                     Toast.makeText(CreateAccountScreen.this, "Password field is required", Toast.LENGTH_SHORT).show();
                 }else {
                     registerUser();
+                    String FullName = User_FullName.getText().toString().trim();
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
                 }
             }
         });
@@ -115,18 +120,35 @@ public class CreateAccountScreen extends AppCompatActivity {
             Password_Field.setError("Password should be greater than 5 characters!");
             Password_Field.requestFocus();
         }
+
         mAuth.createUserWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+
                     User user = new User(FullName,Email);
                     FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(CreateAccountScreen.this, "Your account has been created successfully!", Toast.LENGTH_SHORT).show();
-                                        openNewPage(LoginScreen.class);
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(FullName)
+                                                .build();
+
+                                        user.updateProfile(profileUpdates)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(CreateAccountScreen.this, "Your account has been created successfully!", Toast.LENGTH_SHORT).show();
+                                                            openNewPage(LoginScreen.class);
+                                                        }
+                                                    }
+                                                });
+
                                     }else{
                                         Toast.makeText(CreateAccountScreen.this, "Failed to create account! Try again!", Toast.LENGTH_SHORT).show();
                                     }
@@ -147,6 +169,7 @@ public class CreateAccountScreen extends AppCompatActivity {
                 }
             }
         });
+
 
     }
 

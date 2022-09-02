@@ -271,7 +271,7 @@ public class AccountSetting extends AppCompatActivity implements PersonalInfo.Pe
         user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
-        //make userfullName equal to user name from database
+        //make userFullName equal to user name from database
         databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
